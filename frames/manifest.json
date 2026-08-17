@@ -1,0 +1,13 @@
+{
+  "frameCount": 180,
+  "fps": 30,
+  "quality": 75,
+  "width": 1920,
+  "height": 1080,
+  "sets": {
+    "desktop": "1920w",
+    "mobile": "960w"
+  },
+  "generatedAt": "2026-08-17T20:44:47.932Z",
+  "note": "Fallback sequence generated from the included terrace visual; replace by running scripts/extract-frames.sh with src/hero.mp4."
+}
