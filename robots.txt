@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+
+Host: http://localhost:3100
+Sitemap: http://localhost:3100/sitemap.xml
