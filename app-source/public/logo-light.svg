@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 64" role="img" aria-label="Live Miracle">
+  <title>Live Miracle</title>
+  <!--
+    Primary wordmark. The mark is a broadcast signal glyph: a transmission
+    origin dot with two arcs, set against the vertical bar of a studio flag.
+    Colours use currentColor so the mark inherits the surrounding text colour.
+  -->
+  <g fill="none" stroke="#0A0D12" stroke-width="2.25" stroke-linecap="round">
+    <path d="M14 20 v24" stroke-width="3"/>
+    <path d="M24 26a12 12 0 0 1 0 12"/>
+    <path d="M32 20a20 20 0 0 1 0 24"/>
+  </g>
+  <circle cx="14" cy="32" r="3.75" fill="#3DDCE8"/>
+
+  <text x="52" y="41"
+        font-family="Archivo, 'Helvetica Neue', Arial, sans-serif"
+        font-size="27" font-weight="700" letter-spacing="1.4"
+        fill="#0A0D12">LIVE</text>
+  <text x="126" y="41"
+        font-family="Archivo, 'Helvetica Neue', Arial, sans-serif"
+        font-size="27" font-weight="500" letter-spacing="4.6"
+        fill="#0A0D12" opacity="0.82">MIRACLE</text>
+
+  <!-- Signal baseline: a hairline rule with a brighter transmitted segment. -->
+  <path d="M52 51 H304" stroke="#0A0D12" stroke-width="1" opacity="0.22"/>
+  <path d="M52 51 H104" stroke="#3DDCE8" stroke-width="1"/>
+</svg>

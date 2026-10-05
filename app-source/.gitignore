@@ -1,0 +1,35 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next
+.next/
+out/
+.static-build/
+next-env.d.ts
+
+# generated media derivatives (rebuilt by `npm run prebuild`)
+public/media/
+
+# runtime uploads (media library)
+# uploads now live under data/ (see LM_UPLOAD_DIR)
+
+# database
+data/
+
+# env / secrets
+.env
+.env.local
+.env*.local
+
+# scratch
+.assets-src/
+*.tsbuildinfo
+
+# os
+.DS_Store
+Thumbs.db
+
+# Build uses existing optimized photography from the repository root.
+/assets/

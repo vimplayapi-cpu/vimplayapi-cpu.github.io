@@ -1,0 +1,27 @@
+# Render blueprint — https://render.com/docs/blueprint-spec
+#
+# Render is used here (rather than Vercel/Netlify) because this app needs a
+# persistent filesystem: SQLite lives in /app/data and uploaded media in
+# /app/public/uploads. On an ephemeral serverless filesystem both are wiped on
+# every deploy, taking all CMS content and inquiries with them.
+services:
+  - type: web
+    name: live-miracle
+    runtime: docker
+    plan: starter          # starter or above — free plans have no persistent disk
+    healthCheckPath: /
+    envVars:
+      - key: LM_APP_SECRET
+        generateValue: true      # Render generates and stores a strong secret
+      - key: LM_SITE_URL
+        sync: false              # set to the final public URL
+      - key: LM_TRUSTED_PROXIES
+        value: "1"               # Render terminates TLS at one proxy
+      - key: LM_DATA_DIR
+        value: /app/data
+      - key: LM_ADMIN_EMAIL
+        value: miracle@gmail.com
+    disk:
+      name: live-miracle-data
+      mountPath: /app/data
+      sizeGB: 1

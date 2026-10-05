@@ -1,0 +1,28 @@
+# Fly.io configuration. Adjust app name and primary_region before deploying.
+app = "live-miracle"
+primary_region = "fra"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3000"
+  LM_DATA_DIR = "/app/data"
+  LM_TRUSTED_PROXIES = "1"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = false   # keep one machine warm; SQLite is local to it
+  min_machines_running = 1
+
+# Persistent volume for SQLite and uploaded media. Without this every deploy
+# resets the CMS.
+[mounts]
+  source = "live_miracle_data"
+  destination = "/app/data"
+
+[[vm]]
+  memory = "1gb"
+  cpu_kind = "shared"
+  cpus = 1

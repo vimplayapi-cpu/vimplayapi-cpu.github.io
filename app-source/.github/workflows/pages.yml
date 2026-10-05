@@ -1,0 +1,95 @@
+# Deploys the STATIC frontend to GitHub Pages.
+#
+# Replaces GitHub's stock "Deploy Next.js site to Pages" template, which cannot
+# build this project: that template runs a plain `next build` with
+# output: 'export' injected, and an export hard-fails on API route handlers,
+# on force-dynamic pages and on server-side SQLite. This workflow instead runs
+# scripts/build-static.ts, which prepares a copy with the server-only surfaces
+# removed and exports that.
+#
+# What is deployed: every public page, fully designed, with content baked in at
+# build time from the SQLite database.
+#
+# What is NOT deployed (it needs a Node server — see README):
+#   the /admin back office, the API routes, live form submission, analytics.
+#
+# Because content is baked at build time, a CMS edit only reaches the static
+# site on the next run of this workflow.
+
+name: Deploy static site to Pages
+
+on:
+  push:
+    branches: ['main']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once, but let an in-flight one finish.
+concurrency:
+  group: 'pages'
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+        # Deliberately NOT using static_site_generator: next — that injects an
+        # export config which conflicts with the one build-static.ts writes.
+
+      - name: Install dependencies
+        # better-sqlite3 and sharp are native; ubuntu-latest already carries
+        # the toolchain they need.
+        run: npm ci
+
+      - name: Seed content database
+        # Static generation reads all page content from SQLite, so the database
+        # must exist before the build. The generated admin password is
+        # irrelevant here: the admin surface is not part of a static export.
+        run: npm run db:seed
+        env:
+          LM_APP_SECRET: ${{ secrets.LM_APP_SECRET || 'ci-build-only-placeholder-secret-0000000000' }}
+          LM_ADMIN_PASSWORD: ci-build-only-not-deployed
+
+      - name: Build static site
+        run: npm run build:static
+        env:
+          # Empty for a <user>.github.io repo (served from the domain root).
+          # For a project repo served at /<repo>, set the LM_BASE_PATH variable
+          # in Settings → Secrets and variables → Actions → Variables.
+          LM_BASE_PATH: ${{ vars.LM_BASE_PATH }}
+          NEXT_PUBLIC_LM_CONTACT_EMAIL: ${{ vars.LM_CONTACT_EMAIL || 'miracle@gmail.com' }}
+          # Optional: point the forms at a hosted form endpoint. Without it they
+          # fall back to opening a prefilled email.
+          NEXT_PUBLIC_LM_FORM_ENDPOINT: ${{ vars.LM_FORM_ENDPOINT }}
+          LM_SITE_URL: ${{ steps.pages.outputs.base_url || vars.LM_SITE_URL }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
