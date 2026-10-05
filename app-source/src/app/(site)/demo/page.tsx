@@ -27,7 +27,7 @@ export default function DemoPage() {
 
   return (
     <>
-      <section className="relative isolate overflow-hidden border-b border-hairline pb-16 pt-40 sm:pt-48">
+      <section className="on-photo relative isolate overflow-hidden border-b border-hairline pb-16 pt-40 sm:pt-48">
         {heroImage && (
           <>
             <Frame
