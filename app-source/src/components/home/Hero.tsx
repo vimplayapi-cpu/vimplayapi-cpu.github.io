@@ -1,7 +1,7 @@
 'use client';
 import Link from '@/components/ui/SiteLink';
 import { LiveSignal } from '@/components/brand/Wordmark';
-import { Frame } from '@/components/media/Frame';
+import { StudioSequence } from './StudioSequence';
 import { Arrow } from '@/components/ui';
 import type { ImageAsset } from '@/lib/db/types';
 import { useGsapContext, useMediaQuery, usePrefersReducedMotion } from '@/lib/motion/useGsap';
@@ -15,11 +15,6 @@ export function Hero({ image, eyebrow, headline, body, primaryCta, secondaryCta,
   const ref = useGsapContext<HTMLDivElement>(({ gsap, root }) => {
     gsap.fromTo(root.querySelectorAll('[data-hero-enter]'),
       { y: 22, opacity: .5 }, { y: 0, opacity: 1, stagger: .09, duration: .9, ease: 'power3.out' });
-    const stage = root.querySelector('[data-hero-stage]');
-    const picture = root.querySelector('[data-hero-picture]');
-    gsap.timeline({ scrollTrigger: { trigger: stage, start: 'top 85%', end: 'bottom 20%', scrub: .8 } })
-      .fromTo(stage, { clipPath: 'inset(0 4% round 44px)' }, { clipPath: 'inset(0 0% round 16px)', ease: 'none' }, 0)
-      .fromTo(picture, { scale: 1.10, yPercent: 2 }, { scale: 1, yPercent: -3, ease: 'none' }, 0);
     gsap.to(root.querySelector('[data-brand-seal]'), { y: -35, rotate: 6, ease: 'none',
       scrollTrigger: { trigger: root, start: 'top top', end: 'bottom top', scrub: 1 } });
   }, [], desktop && !reduced);
@@ -44,13 +39,7 @@ export function Hero({ image, eyebrow, headline, body, primaryCta, secondaryCta,
           <LiveSignal lines={signalLines} />
         </div>
       </div>
-      <div className="hero-stage on-photo" data-hero-stage>
-        <div className="hero-stage-picture" data-hero-picture>
-          {image && <Frame image={image} priority sizes="100vw" className="h-full w-full" imgClassName="h-full w-full object-cover" />}
-        </div>
-        <div className="hero-stage-shade" aria-hidden />
-        <div className="hero-stage-caption"><span>{eyebrow}</span><a href="#studio-environments" aria-label="Scroll to studio environments" className="hero-scroll">EXPLORE <span aria-hidden>↓</span></a></div>
-      </div>
+      <StudioSequence image={image} />
       <div className="shell hero-details">
         <div><span>CAM 01 · WIDE</span><h2>Every position planned.</h2><p>Camera coverage, lighting and the technical path are designed together — not bolted on once the set is built.</p></div>
         <div><span>SIGNAL PATH · ACTIVE</span><h2>From the floor to the viewer.</h2><p>Encoding, delivery, monitoring and redundancy, planned as one continuous path.</p></div>

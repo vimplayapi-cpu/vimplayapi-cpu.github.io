@@ -2,7 +2,7 @@
 
 Official GitHub Pages site: https://vimplayapi-cpu.github.io/
 
-The white, gold and oxblood design uses the supplied transparent Live Miracle artwork. Studio media, business details and all existing routes are retained. Logo motion and hero scroll effects respect reduced-motion preferences, and desktop scroll effects are disabled on mobile.
+The white, gold and oxblood design uses the supplied transparent Live Miracle artwork. Studio media, business details and all existing routes are retained. Logo motion and hero scroll effects respect reduced-motion preferences, with lower-resolution frames on mobile and a static poster for reduced motion. The hero scrubs the original 96-frame walkthrough; the About diagrams use raised, high-contrast gold and burgundy controls.
 
 ## Rebuild
 
