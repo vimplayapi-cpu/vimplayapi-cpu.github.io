@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+.mobile-map-countries{display:none}
+.mobile-menu-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;color:#80602b;font:10px monospace;letter-spacing:.1em}
+.mobile-menu-heading button{display:flex;align-items:center;gap:12px;min-height:44px;padding:8px 14px;border:1px solid #ddcdaa;border-radius:12px;color:#820b1b;background:#fffaf2;font:13px sans-serif;letter-spacing:0}
+.mobile-menu-heading button span{font-size:24px}
+
 @layer base {
   :root {
     --shell-header: 5.5rem;

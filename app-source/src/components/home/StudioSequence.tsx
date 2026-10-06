@@ -21,6 +21,7 @@ export function StudioSequence({ image }: { image: ImageAsset | null }) {
     const frames: HTMLImageElement[] = [];
     const playhead = { frame: 0 };
     const size = window.innerWidth < 768 ? 960 : 1920;
+    const scrollStart = () => window.innerWidth < 768 ? 'top 80px' : 'top top';
     let last = -1;
     const draw = () => {
       if (disposed) return;
@@ -64,9 +65,9 @@ export function StudioSequence({ image }: { image: ImageAsset | null }) {
       if (disposed) return;
       const context = gsap.context(() => {
         gsap.to(playhead, { frame: 95, ease: 'none', onUpdate: draw,
-          scrollTrigger: { trigger: el, start: 'top top', end: 'bottom bottom', scrub: .65, invalidateOnRefresh: true } });
+          scrollTrigger: { trigger: el, start: scrollStart, end: 'bottom bottom', scrub: .65, invalidateOnRefresh: true } });
         gsap.to(el.querySelector('.sequence-progress-fill'), { scaleX: 1, ease: 'none',
-          scrollTrigger: { trigger: el, start: 'top top', end: 'bottom bottom', scrub: .65 } });
+          scrollTrigger: { trigger: el, start: scrollStart, end: 'bottom bottom', scrub: .65, invalidateOnRefresh: true } });
       }, el);
       cleanup = () => context.revert();
     });

@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { fontVariables } from '@/lib/fonts';
 import { siteUrl } from '@/lib/env';
 import './globals.css';
+import './mobile.css';
 
 /**
  * Root layout. Per-page metadata is layered on top of these defaults by each

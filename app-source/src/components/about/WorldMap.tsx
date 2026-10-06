@@ -35,6 +35,7 @@ export function WorldMap({ locations, selected, onSelect }: { locations: Locatio
         </g>;
       })}
     </svg>
+    <div className="mobile-map-countries" aria-label="Select country">{locations.map(loc => <button type="button" key={loc.slug} aria-pressed={selected === loc.slug} onClick={() => onSelect(loc.slug)}>{loc.country}</button>)}</div>
     <div className="world-map-footer"><span><i /> Four markets · One operation</span><span>Country locations</span></div>
     <a className="world-map-credit" href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">Map data: Natural Earth</a>
   </div>;

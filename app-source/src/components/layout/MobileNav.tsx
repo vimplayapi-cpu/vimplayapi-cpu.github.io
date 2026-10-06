@@ -37,6 +37,13 @@ export function MobileNav({
   const panelRef = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
 
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.activeElement as HTMLElement | null;
+    panelRef.current?.querySelector<HTMLButtonElement>('[data-menu-close]')?.focus();
+    return () => { previous?.focus(); };
+  }, [open]);
+
   // Lock background scroll while open.
   useEffect(() => {
     if (!open) return;
@@ -116,6 +123,7 @@ export function MobileNav({
       <div style={{ height: 'var(--shell-header)' }} className="shrink-0" />
 
       <nav aria-label="Main" className="shell relative flex min-h-0 flex-1 flex-col justify-center">
+        <div className="mobile-menu-heading"><span>EXPLORE LIVE MIRACLE</span><button data-menu-close type="button" onClick={onClose} aria-label="Close navigation">Close <span aria-hidden>×</span></button></div>
         <ul className="flex flex-col">
           {items.map((item, i) => {
             const active = isActive(item.href);
